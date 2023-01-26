@@ -30,7 +30,7 @@ class UserCubit extends Cubit<UserState> {
     ApiResult result =
         await userRepository.getSingleUser(userId: id);
     if (result.status == ApiStatus.success) {
-      emit(GetAllUsersSuccess(data: result.response));
+      emit(GetSingleUsersSuccess(data: result.response));
     }
     if (result.status == ApiStatus.failed) {
       emit(GetAllUsersFailed());

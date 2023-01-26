@@ -17,9 +17,10 @@ class MyApp extends StatelessWidget {
     return BlocProvider<UserCubit>(
       create: (context) => UserCubit(userRepository: UserRepository(UserApi())),
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'Flutter Task',
         theme: ThemeData(
-          primaryColor: Color.fromARGB(255, 34, 225, 82),
+          primaryColor: const Color.fromARGB(255, 34, 225, 82),
         ),
         initialRoute: '/',
         onGenerateRoute: AppRouter().onRouteGenerate,
