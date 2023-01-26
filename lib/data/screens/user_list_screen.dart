@@ -28,7 +28,10 @@ class _UserListState extends State<UserList> {
   Widget build(BuildContext context) {
     _userCubit = BlocProvider.of<UserCubit>(context);
     return Scaffold(
-      appBar: AppBar(title: const Text("User List")),
+      appBar: AppBar(
+        title: const Text("User List"),
+        centerTitle: true,
+      ),
       body: BlocBuilder<UserCubit, UserState>(
         builder: (context, state) {
           if (state is GetAllUsersSuccess) {
@@ -77,9 +80,17 @@ class _UserListState extends State<UserList> {
                       ],
                     ),
                   ),
-                  subtitle: Text(
-                    data[index].email,
-                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
+                  subtitle: InkWell(
+                    onTap: () {
+                      AppRouter.goToNextPage(context, SingleUser.route,
+                              arguments: {'userId': data[index].id})
+                          .then((value) => _userCubit.getAllUserCubit());
+                    },
+                    child: Text(
+                      data[index].email,
+                      style:
+                          TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
+                    ),
                   ),
                 );
               },

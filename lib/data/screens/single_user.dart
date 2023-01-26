@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_task/controllers/cubit/user_cubit.dart';
@@ -61,7 +62,28 @@ class _SingleUserState extends State<SingleUser> {
                   RowProp(
                       header: 'Last Name:', value: state.data.data.lastName),
                   RowProp(header: 'Email Name:', value: state.data.data.email),
-                ])
+                ]),
+                Row(
+                  children: [
+                    ElevatedButton(
+                        onPressed: () {
+                          createUser(
+                            email: state.data.data.email,
+                            firstName: state.data.data.firstName,
+                            lastName: state.data.data.lastName,
+                            imageUrl: state.data.data.avatar,
+                            id: state.data.data.id,
+                          );
+                        },
+                        child: Text('Add data')),
+                    ElevatedButton(onPressed: () {}, child: Text('Edit data')),
+                    ElevatedButton(
+                        onPressed: () {
+                          deleteData(state.data.data.id);
+                        },
+                        child: Text('Delete data')),
+                  ],
+                )
               ],
             );
           }
@@ -104,4 +126,53 @@ class RowProp extends StatelessWidget {
       ],
     );
   }
+}
+
+Future<void> createUser(
+    {required String firstName,
+    required int id,
+    required String lastName,
+    required String email,
+    required String imageUrl}) async {
+  final docUser = FirebaseFirestore.instance.collection('test').doc(id.toString());
+  final user = UserData(
+      email: email,
+      firstName: firstName,
+      lastName: lastName,
+      id: id,
+      imageUrl: imageUrl);
+  final json2 = user.toJson();
+  await docUser.set(json2);
+}
+
+deleteData(int id) {
+  FirebaseFirestore.instance.collection('dev').doc(id.toString());
+}
+
+class UserData {
+  final int id;
+  final String firstName;
+  final String lastName;
+  final String email;
+  final String imageUrl;
+  UserData({
+    required this.lastName,
+    required this.firstName,
+    required this.id,
+    required this.email,
+    required this.imageUrl,
+  });
+  toJson() => {
+        'id': this.id,
+        'firstName': this.firstName,
+        'email': this.email,
+        'imageUrl': this.imageUrl
+      };
+
+  static UserData fromJson(Map<String, dynamic> json) => UserData(
+      id: json['id'],
+      firstName: json['firstName'],
+      lastName: json['lastName'],
+      email: json['email'],
+      imageUrl: json['imageUrl']);
 }
