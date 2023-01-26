@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_task/controllers/cubit/user_cubit.dart';
 import 'package:flutter_task/data/network/user_api.dart';
@@ -6,6 +7,8 @@ import 'package:flutter_task/data/screens/router/router.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
