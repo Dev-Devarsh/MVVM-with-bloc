@@ -63,7 +63,11 @@ class _SingleUserState extends State<SingleUser> {
                       header: 'Last Name:', value: state.data.data.lastName),
                   RowProp(header: 'Email Name:', value: state.data.data.email),
                 ]),
+                SizedBox(
+                  height: 20,
+                ),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     ElevatedButton(
                         onPressed: () {
@@ -134,7 +138,8 @@ Future<void> createUser(
     required String lastName,
     required String email,
     required String imageUrl}) async {
-  final docUser = FirebaseFirestore.instance.collection('test').doc(id.toString());
+  final docUser =
+      FirebaseFirestore.instance.collection('test').doc(id.toString());
   final user = UserData(
       email: email,
       firstName: firstName,
@@ -146,7 +151,7 @@ Future<void> createUser(
 }
 
 deleteData(int id) {
-  FirebaseFirestore.instance.collection('dev').doc(id.toString());
+  FirebaseFirestore.instance.collection('test').doc(id.toString());
 }
 
 class UserData {
