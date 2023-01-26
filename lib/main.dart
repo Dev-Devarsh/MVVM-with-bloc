@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_task/controllers/cubit/user_cubit.dart';
+import 'package:flutter_task/data/network/user_api.dart';
+import 'package:flutter_task/data/repositories/user_repo.dart';
 import 'package:flutter_task/data/screens/router/router.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -13,7 +15,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<UserCubit>(
-      create: (context) => UserCubit(),
+      create: (context) => UserCubit(userRepository: UserRepository(UserApi())),
       child: MaterialApp(
         title: 'Flutter Task',
         theme: ThemeData(
