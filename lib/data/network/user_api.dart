@@ -11,7 +11,7 @@ class UserApi {
     try {
       http.Response response = await http.get(Uri.parse('https://reqres.in/api/users?page=2'));
 
-      final statusCode = response.body;
+      final statusCode = response.statusCode;
       if (statusCode == ApiStatusCode.SUCCESS) {
         return ApiResult(
             status: ApiStatus.success,
