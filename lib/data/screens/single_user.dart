@@ -151,7 +151,7 @@ Future<void> createUser(
 }
 
 deleteData(int id) {
-  FirebaseFirestore.instance.collection('test').doc(id.toString());
+  FirebaseFirestore.instance.collection('test').doc(id.toString()).delete();
 }
 
 class UserData {
